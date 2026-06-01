@@ -9,6 +9,7 @@ import UpsideDown from './components/UpsideDown';
 import LightsWall from './components/LightsWall';
 import Timeline from './components/Timeline';
 import Trivia from './components/Trivia';
+import Personality from './components/Personality';
 import Themes from './components/Themes';
 import Footer from './components/Footer';
 import Atmosphere from './components/Atmosphere';
@@ -310,6 +311,7 @@ const App: React.FC = () => {
             <LightsWall />
             <Timeline events={timelineData} />
             <Trivia questions={quizData} />
+            <Personality />
             <Themes />
           </main>
           <Footer />

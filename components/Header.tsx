@@ -8,6 +8,7 @@ const navLinks = [
   { href: '#lights', label: 'The Wall' },
   { href: '#timeline', label: 'Timeline' },
   { href: '#trivia', label: 'Trivia' },
+  { href: '#quiz', label: 'Quiz' },
 ];
 
 const Header: React.FC = () => {

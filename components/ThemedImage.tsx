@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { posterArt } from '../utils/posterArt';
 
 interface ThemedImageProps {
@@ -9,15 +9,34 @@ interface ThemedImageProps {
   width?: number;
   height?: number;
   className?: string;
+  /** Optional real photo URL; falls back to the generated art if it fails. */
+  photo?: string;
 }
 
-/** Renders a cohesive, self-contained themed SVG poster (never 404s). */
-const ThemedImage: React.FC<ThemedImageProps> = ({ seed, alt, kind = 'hero', label, width, height, className }) => {
-  const src = useMemo(
+/**
+ * Renders a real photo when provided, gracefully falling back to a cohesive,
+ * self-contained themed SVG poster (which never 404s) on error or by default.
+ */
+const ThemedImage: React.FC<ThemedImageProps> = ({ seed, alt, kind = 'hero', label, width, height, className, photo }) => {
+  const fallback = useMemo(
     () => posterArt({ seed, kind, label, width, height }),
     [seed, kind, label, width, height]
   );
-  return <img src={src} alt={alt} loading="lazy" className={className} />;
+  const [src, setSrc] = useState(photo || fallback);
+
+  useEffect(() => {
+    setSrc(photo || fallback);
+  }, [photo, fallback]);
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      onError={() => src !== fallback && setSrc(fallback)}
+      className={className}
+    />
+  );
 };
 
 export default ThemedImage;

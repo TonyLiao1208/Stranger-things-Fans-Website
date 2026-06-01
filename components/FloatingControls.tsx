@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useUpsideDown } from '../context/UpsideDownContext';
+import { getAmbientSynth } from '../utils/ambientAudio';
 
-/** Back-to-top + Upside Down world toggle, fixed bottom-right. */
+/** Sound + back-to-top + Upside Down world toggle, fixed bottom-right. */
 const FloatingControls: React.FC = () => {
   const { upsideDown, toggle } = useUpsideDown();
   const [show, setShow] = useState(false);
+  const [sound, setSound] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setShow(window.scrollY > 600);
@@ -12,8 +14,34 @@ const FloatingControls: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => () => { getAmbientSynth().stop(); }, []);
+
+  const toggleSound = async () => {
+    const synth = getAmbientSynth();
+    if (sound) {
+      await synth.stop();
+      setSound(false);
+    } else {
+      await synth.start();
+      setSound(true);
+    }
+  };
+
   return (
     <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-center gap-3">
+      <button
+        onClick={toggleSound}
+        aria-pressed={sound}
+        title={sound ? 'Mute the synthwave' : 'Play 80s synthwave ambience'}
+        className={`w-14 h-14 rounded-full flex items-center justify-center text-2xl border-2 transition-all duration-300 ${
+          sound
+            ? 'bg-red-600 border-red-400 pulse-glow'
+            : 'bg-gray-800/90 border-gray-600 hover:border-red-500 hover:text-red-500'
+        }`}
+      >
+        {sound ? '🔊' : '🎹'}
+      </button>
+
       <button
         onClick={toggle}
         aria-pressed={upsideDown}

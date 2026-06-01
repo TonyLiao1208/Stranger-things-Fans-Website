@@ -13,6 +13,9 @@ An immersive, fan-made archive of *Stranger Things*, built with **React 19**, **
 - **Flip into the Upside Down** — a one-tap world toggle (🌀, bottom-right) that warps the entire site into the other dimension.
 - **Joyce's Alphabet Wall** — type a message and watch it light up the Christmas-light wall, letter by letter, just like Hawkins '83.
 - **Hawkins Trivia Challenge** — a scored, multi-question quiz with lore reveals and a final verdict.
+- **"Which Hawkins Hero Are You?"** — a weighted personality quiz that matches you to a character.
+- **80s synthwave ambience** — a toggleable, fully synthesized (Web Audio) dark arpeggio + drone, no audio files.
+- **Bulletproof imagery** — cohesive generated SVG poster art and a hand-drawn "Hawkins at night" key-art background, with graceful `onError` fallback so real photos can be dropped in anytime without ever breaking the layout.
 - **Hawkins Timeline** — an animated vertical timeline from the Creel House (1959) to the Final Chapter.
 - **Seasons explorer** — tabbed breakdown of all five seasons, including the final chapter.
 - **Character cards** — filterable (Party / Grown-ups / Villains) flip cards with quotes and bios.

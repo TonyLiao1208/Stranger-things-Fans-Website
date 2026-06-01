@@ -77,3 +77,50 @@ export function posterArt({ seed, kind = 'hero', width = 400, height = 600, labe
 
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
+
+/**
+ * A wide, atmospheric "Hawkins at night" key-art background: gradient sky,
+ * faint stars, a glowing red rift on the horizon, and a pine-tree silhouette.
+ * Fully self-contained so hero/section backgrounds never depend on the network.
+ */
+export function sceneArt({ width = 1600, height = 900 } = {}): string {
+  let trees = '';
+  const n = 30;
+  for (let i = 0; i <= n; i++) {
+    const x = (i / n) * width;
+    const th = 110 + ((i * 73) % 180);
+    const w = 60 + ((i * 29) % 40);
+    trees += `<polygon points="${x - w},${height} ${x},${height - th} ${x + w},${height}" fill="#04050a"/>`;
+  }
+
+  let stars = '';
+  for (let i = 0; i < 70; i++) {
+    const x = (i * 97) % width;
+    const y = (i * 53) % Math.round(height * 0.6);
+    const r = (i % 3) * 0.6 + 0.4;
+    stars += `<circle cx="${x}" cy="${y}" r="${r}" fill="#aab4d8" opacity="${0.25 + (i % 5) * 0.1}"/>`;
+  }
+
+  const svg = `
+<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b0f1d"/>
+      <stop offset="55%" stop-color="#170a1c"/>
+      <stop offset="100%" stop-color="#050507"/>
+    </linearGradient>
+    <radialGradient id="rift" cx="50%" cy="82%" r="55%">
+      <stop offset="0%" stop-color="#ff1b25" stop-opacity="0.6"/>
+      <stop offset="40%" stop-color="#7a0c12" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#sky)"/>
+  ${stars}
+  <ellipse cx="50%" cy="80%" rx="${Math.round(width * 0.55)}" ry="${Math.round(height * 0.55)}" fill="url(#rift)"/>
+  ${trees}
+</svg>`.trim();
+
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+

@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { sceneArt } from '../utils/posterArt';
 
 const useCountUp = (target: number, run: boolean, duration = 1400) => {
   const [value, setValue] = useState(0);
@@ -28,6 +29,7 @@ const stats = [
 const Hero: React.FC = () => {
   const [run, setRun] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const scene = useMemo(() => sceneArt({ width: 1600, height: 900 }), []);
 
   useEffect(() => {
     const t = setTimeout(() => setRun(true), 600);
@@ -45,7 +47,7 @@ const Hero: React.FC = () => {
     <div
       ref={ref}
       className="relative min-h-screen flex flex-col items-center justify-center text-center bg-cover bg-center vignette"
-      style={{ backgroundImage: "linear-gradient(rgba(5,5,10,0.55), rgba(5,5,10,0.85)), url('https://image.tmdb.org/t/p/original/56v2KjBlU4XaOv9rVYEQypROD7P.jpg')" }}
+      style={{ backgroundImage: `linear-gradient(rgba(5,5,10,0.35), rgba(5,5,10,0.8)), url("${scene}")` }}
     >
       <div className="relative z-10 px-4 max-w-5xl">
         <p className="uppercase tracking-[0.4em] text-red-500 text-sm md:text-base mb-4 font-display">

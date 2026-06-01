@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Section from './Section';
 import Reveal from './Reveal';
+import { sceneArt } from '../utils/posterArt';
 
 const ThemeItem: React.FC<{ title: string; children: React.ReactNode; delay?: number }> = ({ title, children, delay }) => (
   <Reveal delay={delay} className="h-full">
@@ -12,13 +13,14 @@ const ThemeItem: React.FC<{ title: string; children: React.ReactNode; delay?: nu
 );
 
 const Themes: React.FC = () => {
+  const scene = useMemo(() => sceneArt({ width: 1600, height: 900 }), []);
   return (
     <Section
       id="themes"
       title="More Than a TV Show"
       className="bg-black/40"
       style={{
-        backgroundImage: "linear-gradient(rgba(10,10,15,0.85), rgba(10,10,15,0.92)), url('https://image.tmdb.org/t/p/original/56v2KjBlU4XaOv9rVYEQypROD7P.jpg')",
+        backgroundImage: `linear-gradient(rgba(10,10,15,0.82), rgba(10,10,15,0.92)), url("${scene}")`,
         backgroundAttachment: 'fixed',
         backgroundSize: 'cover',
       }}
