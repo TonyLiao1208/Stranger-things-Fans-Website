@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { ISeason } from '../types';
 import Section from './Section';
+import ThemedImage from './ThemedImage';
 
 interface SeasonsProps {
   seasons: ISeason[];
@@ -39,7 +40,15 @@ const Seasons: React.FC<SeasonsProps> = ({ seasons }) => {
           <div key={activeTab} className="reveal is-visible">
             <div className="flex flex-col md:flex-row bg-gray-800 rounded-lg shadow-2xl overflow-hidden border-2 border-gray-700">
               <div className="md:w-1/3 relative">
-                <img src={season.imageUrl} alt={season.title} className="w-full h-64 md:h-full object-cover invertable" />
+                <ThemedImage
+                  seed={season.title}
+                  alt={season.title}
+                  kind="poster"
+                  label={`S${activeTab + 1}`}
+                  width={800}
+                  height={1000}
+                  className="w-full h-64 md:h-full object-cover invertable"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-gray-800 via-transparent to-transparent" />
                 {season.tagline && (
                   <p className="absolute bottom-4 left-4 right-4 md:hidden font-display text-red-400 text-lg italic">

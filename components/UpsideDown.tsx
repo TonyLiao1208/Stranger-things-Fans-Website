@@ -2,6 +2,7 @@ import React from 'react';
 import type { IMonster } from '../types';
 import Section from './Section';
 import Reveal from './Reveal';
+import ThemedImage from './ThemedImage';
 
 interface UpsideDownProps {
   monsters: IMonster[];
@@ -42,7 +43,14 @@ const UpsideDown: React.FC<UpsideDownProps> = ({ monsters }) => {
           <Reveal key={monster.name} delay={i * 100}>
             <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700 flex flex-col h-full transition-transform duration-300 hover:scale-[1.03] hover:shadow-red-900/40">
               <div className="relative">
-                <img src={monster.imageUrl} alt={monster.name} className="w-full h-56 object-cover invertable" />
+                <ThemedImage
+                  seed={monster.name}
+                  alt={monster.name}
+                  kind="monster"
+                  width={600}
+                  height={400}
+                  className="w-full h-56 object-cover invertable"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-800 to-transparent" />
               </div>
               <div className="p-6 flex-grow flex flex-col">

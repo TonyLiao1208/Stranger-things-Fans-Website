@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { ICharacter } from '../types';
 import Section from './Section';
 import Reveal from './Reveal';
+import ThemedImage from './ThemedImage';
 
 const CharacterCard: React.FC<{ character: ICharacter }> = ({ character }) => {
   const [flipped, setFlipped] = useState(false);
@@ -18,7 +19,14 @@ const CharacterCard: React.FC<{ character: ICharacter }> = ({ character }) => {
         {/* Front */}
         <div className="absolute inset-0 bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700 [backface-visibility:hidden]">
           <div className="relative h-full">
-            <img src={character.imageUrl} alt={character.name} className="w-full h-full object-cover object-top invertable" />
+            <ThemedImage
+              seed={character.name}
+              alt={character.name}
+              kind={character.affiliation ?? 'hero'}
+              width={400}
+              height={600}
+              className="w-full h-full object-cover object-top invertable"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
             {character.affiliation === 'villain' && (
               <span className="absolute top-3 right-3 bg-red-700 text-white text-xs font-bold uppercase tracking-wider px-2 py-1 rounded">
