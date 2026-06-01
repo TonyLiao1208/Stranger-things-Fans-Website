@@ -4,23 +4,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stranger Things Fan Wiki</title>
+    <title>Stranger Things — Hawkins Fan Archive</title>
+    <meta name="description" content="An immersive, fan-made archive of Stranger Things. Explore every season, the heroes of Hawkins, the horrors of the Upside Down, light up Joyce's wall, test your trivia, and flip into the Upside Down.">
+    <meta name="theme-color" content="#e50914">
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Stranger Things — Hawkins Fan Archive">
+    <meta property="og:description" content="An immersive fan-made journey into Hawkins, Indiana. Seasons, characters, the Upside Down, an interactive alphabet wall, and a trivia challenge.">
+    <meta property="og:image" content="https://image.tmdb.org/t/p/original/49WJfeN0moxb9IPfGn8AIqMGskD.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom scrollbar for a more thematic feel */
-        ::-webkit-scrollbar {
-            width: 12px;
+        :root {
+            --st-red: #e50914;
+            --st-red-glow: #ff1b25;
+            --st-bg: #0a0a0f;
         }
-        ::-webkit-scrollbar-track {
-            background: #111827; /* bg-gray-900 */
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--st-bg);
         }
+
+        h1, h2, h3, .font-display {
+            font-family: 'Oswald', 'Benguiat', sans-serif;
+        }
+
+        .font-typewriter { font-family: 'Special Elite', monospace; }
+
+        /* Custom thematic scrollbar */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #0a0a0f; }
         ::-webkit-scrollbar-thumb {
-            background-color: #e50914; /* Netflix Red */
+            background-color: var(--st-red);
             border-radius: 20px;
-            border: 3px solid #111827;
+            border: 3px solid #0a0a0f;
         }
-        html {
-            scroll-behavior: smooth;
+        ::selection { background: var(--st-red); color: #fff; }
+
+        /* ===== Neon flicker for the hero title ===== */
+        @keyframes neon-flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow:
+                    0 0 7px #fff, 0 0 14px var(--st-red-glow),
+                    0 0 28px var(--st-red-glow), 0 0 50px var(--st-red),
+                    0 0 75px var(--st-red);
+                opacity: 1;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                opacity: 0.82;
+            }
+        }
+        .neon-flicker { animation: neon-flicker 4.5s infinite alternate; }
+
+        .text-glow-red {
+            text-shadow: 0 0 6px var(--st-red-glow), 0 0 18px rgba(229,9,20,0.6);
+        }
+
+        /* ===== Drifting Upside Down spores ===== */
+        @keyframes spore-drift {
+            0%   { transform: translateY(0) translateX(0); opacity: 0; }
+            10%  { opacity: 0.8; }
+            90%  { opacity: 0.6; }
+            100% { transform: translateY(-110vh) translateX(30px); opacity: 0; }
+        }
+        .spore {
+            position: absolute;
+            bottom: -10px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(180,200,255,0.35) 60%, transparent 70%);
+            pointer-events: none;
+            animation: spore-drift linear infinite;
+            will-change: transform, opacity;
+        }
+
+        /* ===== Atmospheric lightning flash ===== */
+        @keyframes lightning {
+            0%, 95%, 100% { opacity: 0; }
+            96%, 99% { opacity: 0; }
+            97% { opacity: 0.55; }
+            98% { opacity: 0.15; }
+        }
+        .lightning-overlay {
+            position: fixed; inset: 0; pointer-events: none; z-index: 30;
+            background: radial-gradient(circle at 50% 0%, rgba(120,150,255,0.5), transparent 60%);
+            animation: lightning 12s infinite;
+            mix-blend-mode: screen;
+        }
+
+        /* ===== Scroll reveal ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(.2,.7,.2,1), transform 0.8s cubic-bezier(.2,.7,.2,1);
+        }
+        .reveal.is-visible { opacity: 1; transform: none; }
+
+        /* ===== Upside Down world mode ===== */
+        .upside-down-world {
+            filter: hue-rotate(-12deg) contrast(1.15) brightness(0.82) saturate(1.2);
+            transition: filter 0.9s ease;
+        }
+        .upside-down-world .invertable { filter: invert(0.08); }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 12px rgba(229,9,20,0.35); }
+            50% { box-shadow: 0 0 28px rgba(229,9,20,0.75); }
+        }
+        .pulse-glow { animation: pulse-glow 2.4s ease-in-out infinite; }
+
+        /* ===== Christmas light bulb glow ===== */
+        @keyframes bulb-pop {
+            0% { transform: scale(0.6); filter: brightness(0.3); }
+            40% { transform: scale(1.35); }
+            100% { transform: scale(1); }
+        }
+        .bulb-lit { animation: bulb-pop 0.45s ease-out; }
+
+        .vignette::after {
+            content: '';
+            position: fixed; inset: 0; pointer-events: none; z-index: 20;
+            box-shadow: inset 0 0 220px 60px rgba(0,0,0,0.85);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .neon-flicker, .spore, .lightning-overlay, .pulse-glow { animation: none !important; }
+            .reveal { opacity: 1; transform: none; transition: none; }
         }
     </style>
 <script type="importmap">
@@ -33,7 +151,7 @@
 }
 </script>
 </head>
-<body class="bg-gray-900 text-gray-200 font-sans">
+<body class="bg-gray-900 text-gray-200">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
 </body>
