@@ -1,4 +1,5 @@
 import React from 'react';
+import Reveal from './Reveal';
 
 interface SectionProps {
   id: string;
@@ -10,11 +11,13 @@ interface SectionProps {
 
 const Section: React.FC<SectionProps> = ({ id, title, children, className = '', style }) => {
   return (
-    <section id={id} className={`py-16 md:py-24 ${className}`} style={style}>
+    <section id={id} className={`relative py-16 md:py-24 scroll-mt-20 ${className}`} style={style}>
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-red-600 tracking-wider uppercase" style={{ textShadow: '2px 2px 6px rgba(229, 62, 62, 0.4)' }}>
-          {title}
-        </h2>
+        <Reveal>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-red-600 tracking-wider uppercase font-display text-glow-red">
+            {title}
+          </h2>
+        </Reveal>
         {children}
       </div>
     </section>
